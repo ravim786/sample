@@ -1,0 +1,64 @@
+@host=http://localhost:8080/demo
+
+### download dmn ###
+GET {{host}}/trafficViolation http/1.1
+
+### execute dmn ###
+POST {{host}}/trafficViolation http/1.1
+Content-Type: application/json
+
+{
+    "Driver": {
+        "Points": 2
+    },
+    "Violation": {
+        "Type": "speed",
+        "Actual Speed": 120,
+        "Speed Limit": 100
+    }
+}
+
+### execute with full trace ###
+POST {{host}}/trafficViolation/dmnresult http/1.1
+Content-Type: application/json
+
+{
+    "Driver": {
+        "Points": 2
+    },
+    "Violation": {
+        "Type": "speed",
+        "Actual Speed": 120,
+        "Speed Limit": 100
+    }
+}
+
+### graceful exit, on no input ###
+POST {{host}}/trafficViolation http/1.1
+Content-Type: application/json
+
+{
+    //"Driver": {
+    //    "Points": 2
+    //},
+    "Violation": {
+        "Type": "speed",
+        "Actual Speed": 120,
+        "Speed Limit": 100
+    }
+}
+
+### graceful exit, on no missing data ###
+POST {{host}}/trafficViolation http/1.1
+Content-Type: application/json
+
+{
+    "Driver": {
+        "Points": 2
+    },
+    "Violation": {
+        "Type": "speed",
+        //"Actual Speed": 120,
+        "Speed Limit": 100
+    }
+}

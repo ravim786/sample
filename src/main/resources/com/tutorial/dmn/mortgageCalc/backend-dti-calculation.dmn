@@ -1,0 +1,257 @@
+<dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="com.tutorial.dmn.mortgageCalc" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:kie="http://www.drools.org/kie/dmn/1.2" xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:included1="com.tutorial.dmn.mortgageCalc.functions" id="_6889E084-6C4F-4A37-88E5-2DA98BD315E8" name="backend-dti-calculation" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="com.tutorial.dmn.mortgageCalc">
+  <dmn:extensionElements/>
+  <dmn:import id="_2C06A31A-BA87-4DCA-BA86-BDF687ED600A" name="mortg-funcs" namespace="com.tutorial.dmn.mortgageCalc.functions" locationURI="mortgage-functions.dmn" importType="http://www.omg.org/spec/DMN/20180521/MODEL/"/>
+  <dmn:itemDefinition id="_092C4244-F413-464D-B02B-9740766DF19F" name="Borrower" isCollection="false">
+    <dmn:itemComponent id="_4095C92A-9B87-4B2C-979C-4E06E0BEEBAD" name="incomes" isCollection="true">
+      <dmn:typeRef>Income</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_8FD14C71-7DD5-4AA5-945E-6C452E2F5A68" name="Income" isCollection="false">
+    <dmn:itemComponent id="_AD70B7EE-BA25-4EDD-B6BB-10EC37BF42D5" name="incomeType" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_83B09878-141B-4090-BF45-2DE01731FBCD" name="currentIncomeMonthlyTotalAmount" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_C8C4C38F-CBEA-41CB-A84D-325D7C772C7A" name="Liability" isCollection="false">
+    <dmn:itemComponent id="_1CF8A133-4475-4F97-9652-B86701F4B58D" name="label" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_4999D8B7-8B4B-4017-A28A-0034600E909C" name="monthlyPaymentAmount" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_25D796A8-6665-4C93-8E02-5531577563B9" name="payoffStatusIndicator" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_A263FF49-5A5D-40BA-BCDC-D1112115253D" name="exclusionIndicator" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_D68FF8FB-0286-4ADB-814D-2BD8610BDA60" name="Loan" isCollection="false">
+    <dmn:itemComponent id="_349AB5CA-6351-4A05-930F-5F4C138B0495" name="housingExpenses" isCollection="true">
+      <dmn:typeRef>HousingExpense</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_4523D93C-AB2A-4A9B-B883-32F70CED09D7" name="HousingExpense" isCollection="false">
+    <dmn:itemComponent id="_87F929E5-800D-4B3A-9B05-1DFA3C76BA48" name="timingType" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_3E5E262E-D843-42CC-86C5-E3D5E9127F68" name="paymentType" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_EC37C0BC-B88D-4220-B752-A6F0CA12E634" name="paymentAmount" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_B9CCF370-477F-40A7-A5B0-9836FA0CAA9D" name="Relationship" isCollection="false">
+    <dmn:itemComponent id="_8FD39E0A-5B33-4EE9-9678-FC7648F577DD" name="from" isCollection="false">
+      <dmn:typeRef>Any</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_329BF787-98C2-436B-8CAB-CFF8594ACAA2" name="to" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_C7A1FFFF-FED0-4E9D-8AF7-CDCF71B238B4" name="borrowers" isCollection="true">
+    <dmn:typeRef>Borrower</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_3AA4DE4D-408D-4ADB-9238-2F51CC16E50B" name="liabilities" isCollection="true">
+    <dmn:typeRef>Liability</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_B086B748-22E8-4202-971A-DE8A02AC1A53" name="incomes" isCollection="true">
+    <dmn:typeRef>Income</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_FB3EF545-162A-4790-BC1E-A7BED256B497" name="relationships" isCollection="true">
+    <dmn:typeRef>Relationship</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_9927AF5E-EEA2-4961-A2D4-3064D2FF9AF8" name="stringList" isCollection="true"/>
+  <dmn:itemDefinition id="_3182FC65-F788-40E0-9B9E-47617BFA8435" name="numberList" isCollection="true">
+    <dmn:typeRef>number</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:decisionService id="_A0439BE0-C7DE-4437-955C-4B7B2FE6EE20" name="getBackendDTICalculation">
+    <dmn:extensionElements/>
+    <dmn:variable id="_91F77846-9741-4DA2-A17B-1EAE9C3C4767" name="getBackendDTICalculation"/>
+    <dmn:outputDecision href="#_D46D25D6-A9A5-4650-9F0E-FF356A451541"/>
+    <dmn:inputData href="#_1323BE00-41EC-4AD4-93E4-A5CCF46AF8F3"/>
+    <dmn:inputData href="#_C4C80F49-7962-4B28-9CF5-2E08AEF89210"/>
+    <dmn:inputData href="#_65B231EF-704E-4851-979D-56963D305F7B"/>
+    <dmn:inputData href="#_459D67D5-B387-4AB5-9C57-B27434E1DCDC"/>
+  </dmn:decisionService>
+  <dmn:inputData id="_65B231EF-704E-4851-979D-56963D305F7B" name="loan">
+    <dmn:extensionElements/>
+    <dmn:variable id="_50EE9FD1-8E2C-4E70-9A0E-E2175E77E22E" name="loan" typeRef="Loan"/>
+  </dmn:inputData>
+  <dmn:inputData id="_1323BE00-41EC-4AD4-93E4-A5CCF46AF8F3" name="borrowers">
+    <dmn:extensionElements/>
+    <dmn:variable id="_FFB02F1E-6A66-4C17-92BE-078B0426E5F5" name="borrowers" typeRef="borrowers"/>
+  </dmn:inputData>
+  <dmn:inputData id="_C4C80F49-7962-4B28-9CF5-2E08AEF89210" name="liabilities">
+    <dmn:extensionElements/>
+    <dmn:variable id="_534F1DF9-60A1-4AD3-A33A-E4C4315F6825" name="liabilities" typeRef="liabilities"/>
+  </dmn:inputData>
+  <dmn:inputData id="_459D67D5-B387-4AB5-9C57-B27434E1DCDC" name="relationships">
+    <dmn:extensionElements/>
+    <dmn:variable id="_C4216D5D-ABEE-43A1-9321-D07F7D17F976" name="relationships" typeRef="relationships"/>
+  </dmn:inputData>
+  <dmn:decision id="_D46D25D6-A9A5-4650-9F0E-FF356A451541" name="backendDTICalculation">
+    <dmn:extensionElements/>
+    <dmn:variable id="_5FD2D692-3685-4528-9766-BC53FEBA820E" name="backendDTICalculation" typeRef="number"/>
+    <dmn:informationRequirement id="_5CBC5E58-0CBB-4705-B014-057A13B21432">
+      <dmn:requiredInput href="#_65B231EF-704E-4851-979D-56963D305F7B"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_2A167958-70AB-452B-A934-3D03292851AC">
+      <dmn:requiredInput href="#_1323BE00-41EC-4AD4-93E4-A5CCF46AF8F3"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_FC63EE80-EE9D-40E1-B12E-4C3592EECC1F">
+      <dmn:requiredInput href="#_C4C80F49-7962-4B28-9CF5-2E08AEF89210"/>
+    </dmn:informationRequirement>
+    <dmn:informationRequirement id="_27C951B3-970A-4B59-B2FC-D79AC13FB0A9">
+      <dmn:requiredInput href="#_459D67D5-B387-4AB5-9C57-B27434E1DCDC"/>
+    </dmn:informationRequirement>
+    <dmn:knowledgeRequirement id="_4EC01F3C-6A08-48C0-AEF6-731F81AC6F78">
+      <dmn:requiredKnowledge href="com.tutorial.dmn.mortgageCalc.functions#_6DADA27F-75D8-4EA1-A323-5EF0DC402A4A"/>
+    </dmn:knowledgeRequirement>
+    <dmn:invocation id="_B68331CA-F93C-4D36-B1BD-F7BB585387B1">
+      <dmn:literalExpression id="_6BF869A7-4511-4CC9-A8C6-A2D90E738127">
+        <dmn:text>mortg-funcs.backend-dti-function</dmn:text>
+      </dmn:literalExpression>
+      <dmn:binding>
+        <dmn:parameter id="_89C3ED9E-6711-4C41-B296-891BCE421B64" name="loan" typeRef="mortg-funcs.Loan"/>
+        <dmn:literalExpression id="_1CAB2C85-AB73-428F-81F0-09ED2CB6F48A">
+          <dmn:text>loan</dmn:text>
+        </dmn:literalExpression>
+      </dmn:binding>
+      <dmn:binding>
+        <dmn:parameter id="_B6E811F1-2586-40E9-A16F-D1AF881D69D0" name="borrowers" typeRef="mortg-funcs.borrowers"/>
+        <dmn:literalExpression id="_F8969ED1-AC35-4A04-9FD1-45BFFF060781">
+          <dmn:text>borrowers</dmn:text>
+        </dmn:literalExpression>
+      </dmn:binding>
+      <dmn:binding>
+        <dmn:parameter id="_D0850426-CD94-40C2-9D6D-2AA010784BB4" name="liabilities" typeRef="mortg-funcs.liabilities"/>
+        <dmn:literalExpression id="_74408A64-A336-47D5-A973-153950D9824E">
+          <dmn:text>liabilities</dmn:text>
+        </dmn:literalExpression>
+      </dmn:binding>
+      <dmn:binding>
+        <dmn:parameter id="_23A45654-95C6-44DB-A344-A336EAB2BE9B" name="relationships" typeRef="mortg-funcs.relationships"/>
+        <dmn:literalExpression id="_0FC6C913-B0CA-4D3E-A390-E1404B1F3133">
+          <dmn:text>relationships</dmn:text>
+        </dmn:literalExpression>
+      </dmn:binding>
+    </dmn:invocation>
+  </dmn:decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_477D4114-195B-4496-BD65-97922EC88087" name="DRG">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_B68331CA-F93C-4D36-B1BD-F7BB585387B1">
+            <kie:width>50</kie:width>
+            <kie:width>151</kie:width>
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_6BF869A7-4511-4CC9-A8C6-A2D90E738127"/>
+          <kie:ComponentWidths dmnElementRef="_1CAB2C85-AB73-428F-81F0-09ED2CB6F48A">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_F8969ED1-AC35-4A04-9FD1-45BFFF060781">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_74408A64-A336-47D5-A973-153950D9824E">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_0FC6C913-B0CA-4D3E-A390-E1404B1F3133">
+            <kie:width>300</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape id="dmnshape-drg-_A0439BE0-C7DE-4437-955C-4B7B2FE6EE20" dmnElementRef="_A0439BE0-C7DE-4437-955C-4B7B2FE6EE20" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="229" y="21" width="217" height="202"/>
+        <dmndi:DMNLabel/>
+        <dmndi:DMNDecisionServiceDividerLine>
+          <di:waypoint x="229" y="173"/>
+          <di:waypoint x="446" y="173"/>
+        </dmndi:DMNDecisionServiceDividerLine>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-_65B231EF-704E-4851-979D-56963D305F7B" dmnElementRef="_65B231EF-704E-4851-979D-56963D305F7B" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="176" y="246" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-_1323BE00-41EC-4AD4-93E4-A5CCF46AF8F3" dmnElementRef="_1323BE00-41EC-4AD4-93E4-A5CCF46AF8F3" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="253" y="322" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-_C4C80F49-7962-4B28-9CF5-2E08AEF89210" dmnElementRef="_C4C80F49-7962-4B28-9CF5-2E08AEF89210" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="397" y="273" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-_459D67D5-B387-4AB5-9C57-B27434E1DCDC" dmnElementRef="_459D67D5-B387-4AB5-9C57-B27434E1DCDC" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="541" y="315" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-_D46D25D6-A9A5-4650-9F0E-FF356A451541" dmnElementRef="_D46D25D6-A9A5-4650-9F0E-FF356A451541" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="256" y="89" width="166" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="dmnshape-drg-_6DADA27F-75D8-4EA1-A323-5EF0DC402A4A" dmnElementRef="included1:_6DADA27F-75D8-4EA1-A323-5EF0DC402A4A" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="559" y="160" width="234" height="66"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-drg-_5CBC5E58-0CBB-4705-B014-057A13B21432" dmnElementRef="_5CBC5E58-0CBB-4705-B014-057A13B21432">
+        <di:waypoint x="226" y="271"/>
+        <di:waypoint x="339" y="139"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_2A167958-70AB-452B-A934-3D03292851AC" dmnElementRef="_2A167958-70AB-452B-A934-3D03292851AC">
+        <di:waypoint x="303" y="347"/>
+        <di:waypoint x="339" y="139"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_FC63EE80-EE9D-40E1-B12E-4C3592EECC1F" dmnElementRef="_FC63EE80-EE9D-40E1-B12E-4C3592EECC1F">
+        <di:waypoint x="447" y="298"/>
+        <di:waypoint x="339" y="139"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_27C951B3-970A-4B59-B2FC-D79AC13FB0A9-AUTO-TARGET" dmnElementRef="_27C951B3-970A-4B59-B2FC-D79AC13FB0A9">
+        <di:waypoint x="591" y="340"/>
+        <di:waypoint x="339" y="139"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_4EC01F3C-6A08-48C0-AEF6-731F81AC6F78" dmnElementRef="_4EC01F3C-6A08-48C0-AEF6-731F81AC6F78">
+        <di:waypoint x="676" y="193"/>
+        <di:waypoint x="422" y="114"/>
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>

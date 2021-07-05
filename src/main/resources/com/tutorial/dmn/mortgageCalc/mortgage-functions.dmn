@@ -1,0 +1,224 @@
+<dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="com.tutorial.dmn.mortgageCalc.functions" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:kie="http://www.drools.org/kie/dmn/1.2" xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="_6889E084-6C4F-4A37-88E5-2DA98BD315E8" name="mortgage-function" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="com.tutorial.dmn.mortgageCalc.functions">
+  <dmn:extensionElements/>
+  <dmn:itemDefinition id="_092C4244-F413-464D-B02B-9740766DF19F" name="Borrower" isCollection="false">
+    <dmn:itemComponent id="_4095C92A-9B87-4B2C-979C-4E06E0BEEBAD" name="incomes" isCollection="true">
+      <dmn:typeRef>Income</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_8FD14C71-7DD5-4AA5-945E-6C452E2F5A68" name="Income" isCollection="false">
+    <dmn:itemComponent id="_AD70B7EE-BA25-4EDD-B6BB-10EC37BF42D5" name="incomeType" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_83B09878-141B-4090-BF45-2DE01731FBCD" name="currentIncomeMonthlyTotalAmount" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_C8C4C38F-CBEA-41CB-A84D-325D7C772C7A" name="Liability" isCollection="false">
+    <dmn:itemComponent id="_1CF8A133-4475-4F97-9652-B86701F4B58D" name="label" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_4999D8B7-8B4B-4017-A28A-0034600E909C" name="monthlyPaymentAmount" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_25D796A8-6665-4C93-8E02-5531577563B9" name="payoffStatusIndicator" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_A263FF49-5A5D-40BA-BCDC-D1112115253D" name="exclusionIndicator" isCollection="false">
+      <dmn:typeRef>boolean</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_D68FF8FB-0286-4ADB-814D-2BD8610BDA60" name="Loan" isCollection="false">
+    <dmn:itemComponent id="_349AB5CA-6351-4A05-930F-5F4C138B0495" name="housingExpenses" isCollection="true">
+      <dmn:typeRef>HousingExpense</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_4523D93C-AB2A-4A9B-B883-32F70CED09D7" name="HousingExpense" isCollection="false">
+    <dmn:itemComponent id="_87F929E5-800D-4B3A-9B05-1DFA3C76BA48" name="timingType" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_3E5E262E-D843-42CC-86C5-E3D5E9127F68" name="paymentType" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_EC37C0BC-B88D-4220-B752-A6F0CA12E634" name="paymentAmount" isCollection="false">
+      <dmn:typeRef>number</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_B9CCF370-477F-40A7-A5B0-9836FA0CAA9D" name="Relationship" isCollection="false">
+    <dmn:itemComponent id="_8FD39E0A-5B33-4EE9-9678-FC7648F577DD" name="from" isCollection="false">
+      <dmn:typeRef>Any</dmn:typeRef>
+    </dmn:itemComponent>
+    <dmn:itemComponent id="_329BF787-98C2-436B-8CAB-CFF8594ACAA2" name="to" isCollection="false">
+      <dmn:typeRef>string</dmn:typeRef>
+    </dmn:itemComponent>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_C7A1FFFF-FED0-4E9D-8AF7-CDCF71B238B4" name="borrowers" isCollection="true">
+    <dmn:typeRef>Borrower</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_3AA4DE4D-408D-4ADB-9238-2F51CC16E50B" name="liabilities" isCollection="true">
+    <dmn:typeRef>Liability</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_B086B748-22E8-4202-971A-DE8A02AC1A53" name="incomes" isCollection="true">
+    <dmn:typeRef>Income</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_FB3EF545-162A-4790-BC1E-A7BED256B497" name="relationships" isCollection="true">
+    <dmn:typeRef>Relationship</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:itemDefinition id="_9927AF5E-EEA2-4961-A2D4-3064D2FF9AF8" name="stringList" isCollection="true"/>
+  <dmn:itemDefinition id="_3182FC65-F788-40E0-9B9E-47617BFA8435" name="numberList" isCollection="true">
+    <dmn:typeRef>number</dmn:typeRef>
+  </dmn:itemDefinition>
+  <dmn:businessKnowledgeModel id="_6DADA27F-75D8-4EA1-A323-5EF0DC402A4A" name="backend-dti-function">
+    <dmn:extensionElements/>
+    <dmn:variable id="_B619C381-EE0C-47C0-9A41-045F358B1BD5" name="backend-dti-function" typeRef="number"/>
+    <dmn:encapsulatedLogic id="_301F31F0-012F-4B1E-9E3A-872737E20AFF" kind="FEEL">
+      <dmn:formalParameter id="_833314AA-760D-407D-AA78-1EE180362B1D" name="loan" typeRef="Loan"/>
+      <dmn:formalParameter id="_8479A7A1-D4D8-4258-B731-D55CC663F9D2" name="borrowers" typeRef="borrowers"/>
+      <dmn:formalParameter id="_715F580D-3CE5-440F-80A0-796A9C19CE84" name="liabilities" typeRef="liabilities"/>
+      <dmn:formalParameter id="_B827814D-32AC-4F80-B101-D2A405CE0810" name="relationships" typeRef="relationships"/>
+      <dmn:context id="_D104FE45-51B0-40B2-AF1A-D9879A92C642">
+        <dmn:contextEntry>
+          <dmn:variable id="_1A7F4C56-F54A-43F7-AB45-F6647A9D0FD1" name="Aggregated Liability Amount" typeRef="number"/>
+          <dmn:context id="_5C0BAA6A-B8E2-4AB4-9D5C-0C19F2F0F07A">
+            <dmn:contextEntry>
+              <dmn:variable id="_B5A175C5-EE56-46EC-986A-0B6BB3A5BEA6" name="filteredLiabilityLabels" typeRef="stringList"/>
+              <dmn:literalExpression id="_35D5AB44-F7DA-4D31-B8AF-EC62132193B2">
+                <dmn:text>relationships[contains(from, "BORROWER") and contains(to, "LIABILITY")].to</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+            <dmn:contextEntry>
+              <dmn:variable id="_FD6018C5-6A1E-412F-A03F-5C7F3FEF5895" name="filterLiabilitiesByBorrower" typeRef="liabilities"/>
+              <dmn:literalExpression id="_2EAA69DE-5D9B-4838-B968-7CB2FC37900F">
+                <dmn:text>liabilities[list contains (filteredLiabilityLabels, label)]</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+            <dmn:contextEntry>
+              <dmn:variable id="_9DBA908F-C7EA-4E0D-8D7C-7006E5495B38" name="filteredLiabilityMonthlyPaymentAmounts" typeRef="numberList"/>
+              <dmn:literalExpression id="_73BAADC5-84BC-4584-B8BB-5C0A67948469">
+                <dmn:text>filterLiabilitiesByBorrower[payoffStatusIndicator = false and exclusionIndicator = false].monthlyPaymentAmount</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+            <dmn:contextEntry>
+              <dmn:literalExpression id="_720FD79F-B028-4F6B-B7B1-2076AC6E4A39">
+                <dmn:text>sum(filteredLiabilityMonthlyPaymentAmounts)</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+          </dmn:context>
+        </dmn:contextEntry>
+        <dmn:contextEntry>
+          <dmn:variable id="_5044AAD6-23F4-4C81-A6CE-6325C76F72A7" name="Aggregated Borrower Income" typeRef="number"/>
+          <dmn:context id="_0BB96A41-4272-4920-A1F9-DB660959C461">
+            <dmn:contextEntry>
+              <dmn:variable id="_38D6EAAB-56F3-4EA9-B60D-B715E7DFACAA" name="allBorrowersIncomeList" typeRef="incomes"/>
+              <dmn:literalExpression id="_FA3F9AB3-A2F7-4740-9676-AEBEDFA0B276">
+                <dmn:text>flatten(borrowers[incomes != null].incomes)</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+            <dmn:contextEntry>
+              <dmn:variable id="_96FF01D4-1996-4593-92E6-A3B20411513B" name="allBorrowersMonthlyIncomeAmountList" typeRef="numberList"/>
+              <dmn:literalExpression id="_494A6D7A-0C73-46E2-BA72-F14224C80CFB">
+                <dmn:text>allBorrowersIncomeList[incomeType != null].currentIncomeMonthlyTotalAmount</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+            <dmn:contextEntry>
+              <dmn:literalExpression id="_C6E0A0DD-ECDA-40D6-9042-CC551FFCAE89">
+                <dmn:text>sum(allBorrowersMonthlyIncomeAmountList)</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+          </dmn:context>
+        </dmn:contextEntry>
+        <dmn:contextEntry>
+          <dmn:variable id="_FE49F7CC-3CF2-40F0-B3C7-7CA1AAC33254" name="Aggregated Housing Expense" typeRef="number"/>
+          <dmn:context id="_82058669-8D69-44A2-9189-66994B2F56E0">
+            <dmn:contextEntry>
+              <dmn:variable id="_2E2CCAA1-59C8-4293-9228-136E7B2D19AF" name="housingExpensePaymentAmountList" typeRef="numberList"/>
+              <dmn:literalExpression id="_2999A6A2-DA93-4068-98C3-8CCD58136C30">
+                <dmn:text>loan.housingExpenses[timingType = "Proposed" or expenseType != "First Mortgage Principal And Interest"].paymentAmount</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+            <dmn:contextEntry>
+              <dmn:literalExpression id="_F1159AA7-3AB4-4532-A2A5-7EFBBCB16264">
+                <dmn:text>sum(housingExpensePaymentAmountList)</dmn:text>
+              </dmn:literalExpression>
+            </dmn:contextEntry>
+          </dmn:context>
+        </dmn:contextEntry>
+        <dmn:contextEntry>
+          <dmn:literalExpression id="_C5ED640A-B40D-4DB6-ABC2-D06101504FAF">
+            <dmn:text>(Aggregated Liability Amount + Aggregated Housing Expense)/Aggregated Borrower Income</dmn:text>
+          </dmn:literalExpression>
+        </dmn:contextEntry>
+      </dmn:context>
+    </dmn:encapsulatedLogic>
+  </dmn:businessKnowledgeModel>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_477D4114-195B-4496-BD65-97922EC88087" name="DRG">
+      <di:extension>
+        <kie:ComponentsWidthsExtension>
+          <kie:ComponentWidths dmnElementRef="_D104FE45-51B0-40B2-AF1A-D9879A92C642">
+            <kie:width>50</kie:width>
+            <kie:width>222</kie:width>
+            <kie:width>1321</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_5C0BAA6A-B8E2-4AB4-9D5C-0C19F2F0F07A">
+            <kie:width>50</kie:width>
+            <kie:width>267</kie:width>
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_35D5AB44-F7DA-4D31-B8AF-EC62132193B2">
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_2EAA69DE-5D9B-4838-B968-7CB2FC37900F">
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_73BAADC5-84BC-4584-B8BB-5C0A67948469">
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_720FD79F-B028-4F6B-B7B1-2076AC6E4A39">
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_0BB96A41-4272-4920-A1F9-DB660959C461">
+            <kie:width>50</kie:width>
+            <kie:width>267</kie:width>
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_FA3F9AB3-A2F7-4740-9676-AEBEDFA0B276">
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_494A6D7A-0C73-46E2-BA72-F14224C80CFB">
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_C6E0A0DD-ECDA-40D6-9042-CC551FFCAE89">
+            <kie:width>984</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_82058669-8D69-44A2-9189-66994B2F56E0">
+            <kie:width>50</kie:width>
+            <kie:width>266</kie:width>
+            <kie:width>985</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_2999A6A2-DA93-4068-98C3-8CCD58136C30">
+            <kie:width>985</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_F1159AA7-3AB4-4532-A2A5-7EFBBCB16264">
+            <kie:width>985</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_C5ED640A-B40D-4DB6-ABC2-D06101504FAF">
+            <kie:width>1321</kie:width>
+          </kie:ComponentWidths>
+          <kie:ComponentWidths dmnElementRef="_301F31F0-012F-4B1E-9E3A-872737E20AFF">
+            <kie:width>50</kie:width>
+            <kie:width>1613</kie:width>
+          </kie:ComponentWidths>
+        </kie:ComponentsWidthsExtension>
+      </di:extension>
+      <dmndi:DMNShape xmlns:p0="com.tutorial.dmn.mortgageCalc" id="dmnshape-drg-_6DADA27F-75D8-4EA1-A323-5EF0DC402A4A" dmnElementRef="p0:_6DADA27F-75D8-4EA1-A323-5EF0DC402A4A" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="153" y="74" width="155" height="59"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</dmn:definitions>

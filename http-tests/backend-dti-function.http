@@ -1,0 +1,91 @@
+@host=http://localhost:8080/demo
+
+### download dmn ###
+GET {{host}}/backend-dti-calculation http/1.1
+
+### execute dmn ###
+#POST {{host}}/backend-dti-calculation http/1.1
+POST {{host}}/backend-dti-calculation/getBackendDTICalculation http/1.1
+Content-Type: application/json
+
+{
+    "loan":{
+        "loanType":"Conventional",
+        "housingExpenses":[
+        {
+            "paymentAmount":100,
+            "paymentType":"HomeOwnersAssociationDuesAndCondiminiumFees",
+            "timingType":"Present"
+        },
+        {
+            "paymentAmount":50,
+            "paymentType":"FirstMortgagePrincipalAndInterest",
+            "timingType":"Proposed"
+        }]
+    },
+    "borrowers":[
+    {
+        "firstName":"Ravi",
+        "lastName":"Mangalagiri",
+        "incomes":[
+        {
+            "currentIncomeMonthlyTotalAmount":2500,
+            "incomeType":"Base"
+        },
+        {
+            "currentIncomeMonthlyTotalAmount":200,
+            "incomeType":"Bonus"
+        }]
+    },
+    {
+        "firstName":"Lyn",
+        "lastName":"Uzzle",
+        "incomes":[
+        {
+            "currentIncomeMonthlyTotalAmount":500,
+            "incomeType":"Base"
+        },
+        {
+            "currentIncomeMonthlyTotalAmount":20,
+            "incomeType":"Bonus"
+        }]
+    }],
+    "liabilities":[
+    {
+        "label":"LIABILITY_1",
+        "payoffStatusIndicator":false,
+        "exclusionIndicator":false,
+        "monthlyPaymentAmount":150
+    },
+    {
+        "label":"LIABILITY_2",
+        "payoffStatusIndicator":false,
+        "exclusionIndicator":false,
+        "monthlyPaymentAmount":50
+    },
+    {
+        "Label":"LIABILITY_3",
+        "payoffStatusIndicator":true,
+        "exclusionIndicator":false,
+        "monthlyPaymentAmount":150
+    },
+    {
+        "Label":"LIABILITY_4",
+        "payoffStatusIndicator":false,
+        "exclusionIndicator":false,
+        "monthlyPaymentAmount":25
+    }],
+    "relationships":[
+    {
+        "from":"BORROWER_1",
+        "to":"LIABILITY_1"
+    },
+    {
+        "from":"BORROWER_2",
+        "to":"LIABILITY_2"
+    },
+    {
+        "from":"BORROWER_2",
+        "to":"LIABILITY_3"
+    }]
+}
