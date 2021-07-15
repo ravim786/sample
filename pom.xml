@@ -16,7 +16,7 @@
   <description>Generated project sample</description>
 
   <properties>
-    <java.version>11</java.version>
+    <java.version>8</java.version>
     <kogito.version>1.8.0.Final</kogito.version>
     <maven.test.skip>false</maven.test.skip>
   </properties>
