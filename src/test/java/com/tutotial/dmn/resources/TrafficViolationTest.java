@@ -28,7 +28,7 @@ public class TrafficViolationTest {
         given().contentType(ContentType.JSON).accept(ContentType.JSON)
                 .body("{" + "\"Driver\": {" + "\"Points\": 2" + "}," + "\"Violation\": {" + "\"Type\": \"speed\","
                         + "\"Actual Speed\": 120," + "\"Speed Limit\": 100" + "}" + "}")
-                .when().post("/demo/trafficViolation").then().statusCode(200)
+                .when().post("/trafficViolation").then().statusCode(200)
                 .body("'Should the driver be suspended?'", equalTo("No"));
 
     }
