@@ -13,4 +13,4 @@
 Take a look at http-tests folder to run few tests.
 
 # Swagger documentation
-Swagger UI - http://localhost:8080/demo/swagger-ui.html
+Swagger UI - http://localhost:8080/swagger-ui.html
